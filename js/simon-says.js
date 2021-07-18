@@ -34,9 +34,13 @@ Consigli del giorno:
 var totalsRandomNumbers = [];
 var totalsNumbers = 10;
 var casualNumbers = 5;
+var time = 3000;
 //var possibilities = totalsNumbers - randomNumbers;
 
-//1 - Genero 5 numeri random da 1 a 50.
+
+
+
+//Preparazione del gioco
 while (totalsRandomNumbers.length < casualNumbers) {
     //generiamo un numero casuale da 1 a 100;
     var randomNumber = getRandomNumber(1, totalsNumbers);
@@ -49,6 +53,86 @@ while (totalsRandomNumbers.length < casualNumbers) {
 }
 console.log(totalsRandomNumbers);
 alert('Memorizza i numeri che sono stati generati: ' + totalsRandomNumbers);
+
+
+
+//Inizio del gioco
+//creazione del timer
+/*
+setTimeout(timer, 5000)
+function timer() {
+    alert('hello');
+}
+*/
+
+
+
+var userNumbers = [];
+//var userGameover = false;
+
+while (/*!userGameover &&*/ userNumbers.length < casualNumbers) {
+    //CHIEDO UN NUMERO ALL'UTENTE
+    var userChoice = getUserNumber(1, totalsNumbers);
+    console.log(userChoice);
+
+    //verifichiamo che il numero non sia nell' Array tra quelli già scelti dall'utente
+    if (!isInArray(userChoice, userNumbers)) {
+        //se è presente
+        userNumbers.push(userChoice);
+    } else if (userNumbers.length === totalsRandomNumbers.length) {
+        alert('Hai Vinto!! Totalizzando un punteggio pari a ' + userNumbers.length);
+    } else {
+        alert('Hai perso! Hai totalizzato ' + userNumbers.length);
+    }
+    console.log(userNumbers);
+}
+/*
+while (!userGameover && userNumbers.length < casualNumbers) {
+    //CHIEDO UN NUMERO ALL'UTENTE
+
+
+    for (var i = 0; i < totalsRandomNumbers.length; i++) {
+
+        var userChoice = getUserNumber(1, totalsNumbers);
+
+        if (userChoice === totalsRandomNumbers[i]) {
+            userNumbers.push(userChoice);
+            console.log(userNumbers);
+        } else {
+            userGameover = true;
+        }
+
+    }
+
+
+    console.log(userNumbers);
+}
+*/
+/*
+if (userGameover) {
+    alert('Hai perso! Hai totalizzato ' + userNumbers.length);
+} else {
+    alert('Hai Vinto!! Totalizzando un punteggio pari a ' + userNumbers.length);
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /******** FUNCTION RANDOM NUMBER */
 
@@ -84,6 +168,22 @@ function isInArray(needle, arr) {
         i++
     }
     return found;
+}
+
+
+/** FUNCTION FOR USERNUMBER */
+function getUserNumber(min, max) {
+    //CHIEDO UN NUMERO ALL'UTENTE
+    var number;
+
+    do {
+        number = prompt('Inserisci un numero da ' + min + ' a ' + max);
+    }
+
+    //verifichiamo che l utente non abbia scritto qualcosa di diverso da quello chiesto
+    while (!number || isNaN(number) || number.trim() === '' || number < min || number > max);
+
+    return parseInt(number);
 }
 
 
