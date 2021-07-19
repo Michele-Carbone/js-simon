@@ -32,23 +32,25 @@ Consigli del giorno:
 */
 
 var totalsRandomNumbers = [];
-var totalsNumbers = 10;
+var totalsNumbers = 100;
 var casualNumbers = 5;
-var time = 3000;
-//var possibilities = totalsNumbers - randomNumbers;
 
 
 
 
 //Preparazione del gioco
+
 while (totalsRandomNumbers.length < casualNumbers) {
+
     //generiamo un numero casuale da 1 a 100;
     var randomNumber = getRandomNumber(1, totalsNumbers);
     console.log('numero casuale: ', randomNumber);
 
     //verificare se il numero generato è già presente nell Array totalsRandomNumbers
+    //se non è presente aggiungi il numero, inseriscilo
     if (!isInArray(randomNumber, totalsRandomNumbers)) {
         totalsRandomNumbers.push(randomNumber);
+        console.log('Array di tutti i numeri salvati: ' + totalsRandomNumbers);
     }
 }
 console.log(totalsRandomNumbers);
@@ -57,63 +59,38 @@ alert('Memorizza i numeri che sono stati generati: ' + totalsRandomNumbers);
 
 
 //Inizio del gioco
-//creazione del timer
-/*
-setTimeout(timer, 5000)
-function timer() {
-    alert('hello');
-}
-*/
+setTimeout(function () {
 
+    var userNumbers = [];
+    var exactNumbers = [];
 
-
-var userNumbers = [];
-//var userGameover = false;
-
-while (/*!userGameover &&*/ userNumbers.length < casualNumbers) {
-    //CHIEDO UN NUMERO ALL'UTENTE
-    var userChoice = getUserNumber(1, totalsNumbers);
-    console.log(userChoice);
-
-    //verifichiamo che il numero non sia nell' Array tra quelli già scelti dall'utente
-    if (!isInArray(userChoice, userNumbers)) {
-        //se è presente
-        userNumbers.push(userChoice);
-    } else if (userNumbers.length === totalsRandomNumbers.length) {
-        alert('Hai Vinto!! Totalizzando un punteggio pari a ' + userNumbers.length);
-    } else {
-        alert('Hai perso! Hai totalizzato ' + userNumbers.length);
-    }
-    console.log(userNumbers);
-}
-/*
-while (!userGameover && userNumbers.length < casualNumbers) {
-    //CHIEDO UN NUMERO ALL'UTENTE
-
-
-    for (var i = 0; i < totalsRandomNumbers.length; i++) {
-
+    while (userNumbers.length < casualNumbers) {
+        //CHIEDO UN NUMERO ALL'UTENTE
         var userChoice = getUserNumber(1, totalsNumbers);
+        console.log(userChoice);
 
-        if (userChoice === totalsRandomNumbers[i]) {
+        //verifichiamo che il numero non sia nell' Array tra quelli già scelti dall'utente
+        //se non è presente aggiungi il numero, inseriscilo
+        if (!isInArray(userChoice, userNumbers)) {
+            //se è presente
             userNumbers.push(userChoice);
-            console.log(userNumbers);
+            console.log('Array dei numeri salvati dal utente: ' + userNumbers);
+
+            //verifichiamo che il numero inserito dall'utente corrisponda a quello generato nell Array
+            if (isInArray(userChoice, totalsRandomNumbers)) {
+                //se corrisponde salviamo il numero in un Array dei numeri indovinati
+                exactNumbers.push(userChoice);
+
+            }
+
         } else {
-            userGameover = true;
+            alert('Il numero è stato già inserito!');
         }
 
     }
-
-
-    console.log(userNumbers);
-}
-*/
-/*
-if (userGameover) {
-    alert('Hai perso! Hai totalizzato ' + userNumbers.length);
-} else {
-    alert('Hai Vinto!! Totalizzando un punteggio pari a ' + userNumbers.length);
-}*/
+    //mostriamo il punteggio all'utente
+    alert('Hai indovinato ' + exactNumbers.length + ' numeri: ' + exactNumbers);
+}, 10000);
 
 
 
@@ -161,7 +138,10 @@ function getRandomNumber(min, max) {
 function isInArray(needle, arr) {
     var found = false;
     var i = 0;
+    console.log(needle);
+    console.log(arr);
     while (!found && i < arr.length) {
+
         if (needle === arr[i]) {
             found = true;
         }
